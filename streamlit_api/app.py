@@ -34,13 +34,13 @@ player_detail_page = st.Page(
 matches_page = st.Page(
     "pages/matches.py",
     title="경기",
-    icon="🏟️",
+    icon="🥅",
 )
 
 teams_page = st.Page(
     "pages/teams.py",
     title="팀",
-    icon="🌎",
+    icon="👕",
 )
 
 stats_page = st.Page(
