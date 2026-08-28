@@ -48,11 +48,9 @@ with st.form("player_search_form"):
         sort_by = st.selectbox(
             "정렬 기준",
             [
-                "id",
                 "player",
-                "team",
+                "games",
                 "age",
-                "appearances",
                 "minutes",
                 "goals",
                 "assists",
@@ -124,12 +122,10 @@ if data:
     display_columns = [
         column
         for column in [
-            "id",
+
             "player",
-            "team",
-            "position",
+            "games",
             "age",
-            "appearances",
             "minutes",
             "goals",
             "assists",
