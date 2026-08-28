@@ -3,11 +3,11 @@
 # - '선수(Player)' 관련 API 엔드포인트 모음
 # ==============================================================
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import select, asc, desc
+from sqlalchemy import select, asc, desc, or_
 from starlette import status
 
 from database.db_connection import SessionFactory
-from models import Player
+from models import Player, PlayerE
 from schema.request import PlayerCreateRequest, PlayerUpdateRequest
 from schema.response import PlayerResponse
 from auth.jwt import get_current_username
@@ -40,8 +40,15 @@ def get_players_handler(
         if position:
             stmt = stmt.where(Player.position == position)
         if search:
-            stmt = stmt.where(Player.player.ilike(f'%{search}%'))
+            # playerse(영어) 테이블에서 매칭되는 players_id 목록
+            en_match_ids = select(PlayerE.id).where(PlayerE.player.ilike(f'%{search}%'))
 
+            stmt = stmt.where(
+                or_(
+                    Player.player.ilike(f'%{search}%'),
+                    Player.id.in_(en_match_ids),
+                )
+            )
         sort_col = getattr(Player, sort_by)
         stmt = stmt.order_by(desc(sort_col) if order == 'desc' else asc(sort_col))
         stmt = stmt.offset(offset).limit(limit)

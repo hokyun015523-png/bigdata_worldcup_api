@@ -1,4 +1,4 @@
--- 2026 FIFA 월드컵 데이터 스키마 (자동 생성)
+--  2026 FIFA 월드컵 데이터 스키마 (자동 생성)
 -- players / matches / teams 3개 테이블. 텍스트 값은 한국어로 정리됨 (position 제외)
 
 DROP TABLE IF EXISTS players CASCADE;
@@ -525,7 +525,128 @@ COMMENT ON COLUMN teams."gk_pens_saved_against" IS '[상대팀 기준] 페널티
 COMMENT ON COLUMN teams."gk_pens_missed_against" IS '[상대팀 기준] 상대가 실축한 페널티킥 수';
 COMMENT ON COLUMN teams."gk_pens_save_pct_against" IS '[상대팀 기준] 페널티킥 선방률(%)';
 
+DROP TABLE IF EXISTS playerse CASCADE;
+CREATE TABLE playersE (
+    "players_id" SERIAL PRIMARY KEY,
+    "player" TEXT,
+    "team" TEXT,
+    "team_country" TEXT,
+    "position" TEXT,
+    "age" INTEGER,
+    "birth_year" INTEGER,
+    "club" TEXT,
+    "games" INTEGER,
+    "games_starts" INTEGER,
+    "minutes" NUMERIC,
+    "minutes_90s" NUMERIC,
+    "goals" NUMERIC,
+    "assists" NUMERIC,
+    "goals_assists" NUMERIC,
+    "goals_pens" NUMERIC,
+    "pens_made" NUMERIC,
+    "pens_att" NUMERIC,
+    "cards_yellow" NUMERIC,
+    "cards_red" NUMERIC,
+    "goals_per90" NUMERIC,
+    "assists_per90" NUMERIC,
+    "goals_assists_per90" NUMERIC,
+    "goals_pens_per90" NUMERIC,
+    "goals_assists_pens_per90" NUMERIC,
+    "shots" NUMERIC,
+    "shots_on_target" NUMERIC,
+    "shots_on_target_pct" NUMERIC,
+    "shots_per90" NUMERIC,
+    "shots_on_target_per90" NUMERIC,
+    "goals_per_shot" NUMERIC,
+    "goals_per_shot_on_target" NUMERIC,
+    "minutes_per_game" NUMERIC,
+    "minutes_pct" NUMERIC,
+    "minutes_per_start" NUMERIC,
+    "games_complete" INTEGER,
+    "games_subs" INTEGER,
+    "minutes_per_sub" NUMERIC,
+    "unused_subs" INTEGER,
+    "points_per_game" NUMERIC,
+    "on_goals_for" NUMERIC,
+    "on_goals_against" NUMERIC,
+    "plus_minus" NUMERIC,
+    "plus_minus_per90" NUMERIC,
+    "plus_minus_wowy" NUMERIC,
+    "cards_yellow_red" NUMERIC,
+    "fouls" NUMERIC,
+    "fouled" NUMERIC,
+    "offsides" NUMERIC,
+    "crosses" NUMERIC,
+    "interceptions" NUMERIC,
+    "tackles_won" NUMERIC,
+    "pens_won" TEXT,
+    "pens_conceded" TEXT,
+    "own_goals" NUMERIC,
+    "gk_games" NUMERIC,
+    "gk_games_starts" NUMERIC,
+    "gk_minutes" NUMERIC,
+    "gk_goals_against" NUMERIC,
+    "gk_goals_against_per90" NUMERIC,
+    "gk_shots_on_target_against" NUMERIC,
+    "gk_saves" NUMERIC,
+    "gk_save_pct" NUMERIC,
+    "gk_wins" NUMERIC,
+    "gk_ties" NUMERIC,
+    "gk_losses" NUMERIC,
+    "gk_clean_sheets" NUMERIC,
+    "gk_clean_sheets_pct" NUMERIC,
+    "gk_pens_att" NUMERIC,
+    "gk_pens_allowed" NUMERIC,
+    "gk_pens_saved" NUMERIC,
+    "gk_pens_missed" NUMERIC,
+    "gk_pens_save_pct" NUMERIC
+);
 
+COMMENT ON COLUMN matches."round" IS '라운드/스테이지 (조별리그, 16강 등)';
+COMMENT ON COLUMN matches."gameweek" IS '조별리그 라운드 번호(조별리그 1~3라운드, 토너먼트는 공란)';
+COMMENT ON COLUMN matches."dayofweek" IS '요일';
+COMMENT ON COLUMN matches."date" IS '경기 날짜';
+COMMENT ON COLUMN matches."start_time" IS '경기 시작 시각(현지시각)';
+COMMENT ON COLUMN matches."home_team" IS '홈팀(대회 특성상 편의상 지정된 팀, 중립경기 다수)';
+COMMENT ON COLUMN matches."away_team" IS '원정팀';
+COMMENT ON COLUMN matches."score" IS '최종 스코어 (정규시간+연장 기준, ''홈-원정'' 형식)';
+COMMENT ON COLUMN matches."home_score" IS '홈팀 득점 수(정규시간+연장 기준)';
+COMMENT ON COLUMN matches."away_score" IS '원정팀 득점 수(정규시간+연장 기준)';
+COMMENT ON COLUMN matches."home_pens" IS '승부차기 홈팀 득점 수(승부차기가 없으면 NULL)';
+COMMENT ON COLUMN matches."away_pens" IS '승부차기 원정팀 득점 수(승부차기가 없으면 NULL)';
+COMMENT ON COLUMN matches."went_to_penalties" IS '승부차기 진행 여부(true/false)';
+COMMENT ON COLUMN matches."attendance" IS '관중 수';
+COMMENT ON COLUMN matches."venue" IS '경기장';
+COMMENT ON COLUMN matches."referee" IS '주심';
+COMMENT ON COLUMN matches."home_formation" IS '홈팀 포메이션';
+COMMENT ON COLUMN matches."away_formation" IS '원정팀 포메이션';
+COMMENT ON COLUMN matches."home_manager" IS '홈팀 감독';
+COMMENT ON COLUMN matches."away_manager" IS '원정팀 감독';
+COMMENT ON COLUMN matches."home_captain" IS '홈팀 주장';
+COMMENT ON COLUMN matches."away_captain" IS '원정팀 주장';
+COMMENT ON COLUMN matches."home_possession" IS '홈팀 점유율(%)';
+COMMENT ON COLUMN matches."away_possession" IS '원정팀 점유율(%)';
+COMMENT ON COLUMN matches."home_sot" IS '홈팀 유효슈팅 수';
+COMMENT ON COLUMN matches."away_sot" IS '원정팀 유효슈팅 수';
+COMMENT ON COLUMN matches."home_total_shots" IS '홈팀 총 슈팅 수';
+COMMENT ON COLUMN matches."away_total_shots" IS '원정팀 총 슈팅 수';
+COMMENT ON COLUMN matches."home_saves" IS '홈팀 골키퍼 선방 수';
+COMMENT ON COLUMN matches."away_saves" IS '원정팀 골키퍼 선방 수';
+COMMENT ON COLUMN matches."home_cards_yellow" IS '홈팀 경고 수';
+COMMENT ON COLUMN matches."away_cards_yellow" IS '원정팀 경고 수';
+COMMENT ON COLUMN matches."home_cards_red" IS '홈팀 퇴장 수';
+COMMENT ON COLUMN matches."away_cards_red" IS '원정팀 퇴장 수';
+COMMENT ON COLUMN matches."home_fouls" IS '홈팀 파울 수';
+COMMENT ON COLUMN matches."away_fouls" IS '원정팀 파울 수';
+COMMENT ON COLUMN matches."home_corners" IS '홈팀 코너킥 수';
+COMMENT ON COLUMN matches."away_corners" IS '원정팀 코너킥 수';
+COMMENT ON COLUMN matches."home_crosses" IS '홈팀 크로스 수';
+COMMENT ON COLUMN matches."away_crosses" IS '원정팀 크로스 수';
+COMMENT ON COLUMN matches."home_interceptions" IS '홈팀 인터셉트 수';
+COMMENT ON COLUMN matches."away_interceptions" IS '원정팀 인터셉트 수';
+COMMENT ON COLUMN matches."home_offsides" IS '홈팀 오프사이드 수';
+COMMENT ON COLUMN matches."away_offsides" IS '원정팀 오프사이드 수';
+COMMENT ON COLUMN matches."notes" IS '비고(연장전, 승부차기 승리팀 등 특이사항)';
 -- ================================
 -- 데이터 적재 (psql \copy 사용, 클라이언트 로컬 파일 기준)
 -- CSV 헤더 순서 = 테이블 컬럼 순서(SERIAL id 제외)와 동일하므로 컬럼 목록 생략 가능

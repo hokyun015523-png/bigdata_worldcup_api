@@ -21,7 +21,7 @@ with st.form("player_search_form"):
     with col1:
         search = st.text_input(
             "선수 이름",
-            placeholder="예: 손흥민",
+            placeholder="예: '손흥민' or 'Son'" ,
         )
 
     with col2:

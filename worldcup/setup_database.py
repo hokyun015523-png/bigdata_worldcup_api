@@ -25,6 +25,7 @@ TABLES = {
     "players": "players.csv",
     "matches": "matches.csv",
     "teams": "teams.csv",
+    "playerse": "playersE.csv"
 }
 
 
@@ -48,12 +49,19 @@ def run_schema(engine):
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         schema_sql = f.read()
 
+    # 주석 줄 전부 제거
+    lines = [
+        line for line in schema_sql.splitlines()
+        if not line.strip().startswith("--")
+    ]
+    schema_sql = "\n".join(lines)
+
     with engine.begin() as conn:
         for statement in schema_sql.split(";"):
             statement = statement.strip()
             if statement and not statement.startswith("--"):
                 conn.execute(text(statement))
-    print("   -> 완료 (players / matches / teams 테이블 생성됨)\n")
+    print("   -> 완료 (players / matches / teams / playerE 테이블 생성됨)\n")
 
 
 def load_csv(engine, table: str, filename: str):
@@ -62,7 +70,11 @@ def load_csv(engine, table: str, filename: str):
         print(f"[오류] {path} 파일을 찾을 수 없습니다.")
         sys.exit(1)
 
-    df = pd.read_csv(path)
+    try:
+        df = pd.read_csv(path, encoding="utf-8")
+    except UnicodeDecodeError:
+        df = pd.read_csv(path, encoding="cp949")
+
     df.to_sql(table, engine, if_exists="append", index=False)
     print(f"   -> {filename} 를 {table} 테이블에 {len(df)}행 적재 완료")
 

@@ -67,3 +67,26 @@ class Team(Base):
     goals: Mapped[int | None] = mapped_column(Integer)
     assists: Mapped[int | None] = mapped_column(Integer)
     goals_against: Mapped[int | None] = mapped_column(Integer)      # 실점(상대 기준)
+
+
+# --- PlayerE 모델 (선수 테이블) -----------------------------
+class PlayerE(Base):
+    __tablename__ = 'playerse'  # 실제 DB 테이블 이름
+
+    # DB 컬럼명은 players_id 인데, 파이썬에서는 짧게 id로 쓰고 싶어서
+    # mapped_column('players_id', ...) 처럼 컬럼명을 직접 지정
+    id: Mapped[int] = mapped_column('players_id', Integer, primary_key=True)
+
+    player: Mapped[str | None] = mapped_column(String(255))       # 선수 이름
+    team: Mapped[str | None] = mapped_column(String(255))         # 소속 국가대표팀
+    team_country: Mapped[str | None] = mapped_column(String(255))  # 소속 국가(전체명)
+    position: Mapped[str | None] = mapped_column(String(10))       # GK/DF/MF/FW
+    age: Mapped[int | None] = mapped_column(Integer)               # 나이
+    birth_year: Mapped[int | None] = mapped_column(Integer)        # 출생 연도
+    club: Mapped[str | None] = mapped_column(String(255))          # 소속 클럽
+    games: Mapped[int | None] = mapped_column(Integer)             # 출전 경기 수
+    minutes: Mapped[float | None] = mapped_column(Numeric)         # 총 출전 시간(분)
+    goals: Mapped[float | None] = mapped_column(Numeric)           # 득점
+    assists: Mapped[float | None] = mapped_column(Numeric)         # 도움
+    cards_yellow: Mapped[float | None] = mapped_column(Numeric)    # 경고 수
+    cards_red: Mapped[float | None] = mapped_column(Numeric)       # 퇴장 수
