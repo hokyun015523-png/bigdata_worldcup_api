@@ -39,3 +39,9 @@ def root():
         'docs': '/docs',
         'endpoints': ['/players', '/matches', '/teams', '/stats/top-scorers', '/stats/team-goal-diff'],
     }
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ok"
+    }
